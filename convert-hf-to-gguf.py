@@ -13,7 +13,7 @@ from enum import IntEnum
 from pathlib import Path
 from hashlib import sha256
 from typing import TYPE_CHECKING, Any, Callable, ContextManager, Iterator, Sequence, TypeVar, cast
-
+"phi3"
 import numpy as np
 import torch
 
@@ -2079,7 +2079,7 @@ class Phi2Model(Model):
 
 @Model.register("Phi3ForCausalLM")
 class Phi3MiniModel(Model):
-    model_arch = gguf.MODEL_ARCH.PHI3
+    model_arch = gguf.MODEL_ARCH.LLAMA
 
     def set_vocab(self):
         from sentencepiece import SentencePieceProcessor
