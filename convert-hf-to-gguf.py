@@ -2150,7 +2150,7 @@ class Phi3MiniModel(Model):
         n_head = self.find_hparam(["num_attention_heads", "n_head"])
         rms_eps = self.find_hparam(["rms_norm_eps"])
 
-        self.gguf_writer.add_name("Phi3")
+        self.gguf_writer.add_name("llama")
         self.gguf_writer.add_context_length(self.find_hparam(["n_positions", "max_position_embeddings"]))
 
         self.gguf_writer.add_embedding_length(n_embd)
