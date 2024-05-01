@@ -128,8 +128,8 @@ class Model(ABC):
             self.gguf_writer.add_expert_used_count(n_experts_used)
             print(f"gguf: experts used count = {n_experts_used}")
 
-        self.gguf_writer.add_file_type(self.ftype)
-        print(f"gguf: file type = {self.ftype}")
+        self.gguf_writer.add_file_type(15)
+        print("test"*100)
 
     def write_tensors(self):
         block_count = self.hparams.get("n_layers", self.hparams.get("num_hidden_layers", self.hparams.get("n_layer")))
@@ -174,7 +174,7 @@ class Model(ABC):
 
     def write(self):
         self.gguf_writer.add_architecture("llama")
-        self.gguf_writer.add_file_type(15)
+        # self.gguf_writer.add_file_type(15)
         self.gguf_writer.add_rope_freq_base(10000.000000)
         self.write_tensors()
         self.gguf_writer.write_header_to_file()
@@ -2161,7 +2161,7 @@ class Phi3MiniModel(Model):
         self.gguf_writer.add_head_count_kv(n_head)
         self.gguf_writer.add_layer_norm_rms_eps(rms_eps)
         self.gguf_writer.add_rope_dimension_count(int(rot_pct * n_embd) // n_head)
-        self.gguf_writer.add_file_type(self.ftype)
+        self.gguf_writer.add_file_type(15)
 
 
 @Model.register("PlamoForCausalLM")
