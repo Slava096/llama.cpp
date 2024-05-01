@@ -13,7 +13,6 @@ from enum import IntEnum
 from pathlib import Path
 from hashlib import sha256
 from typing import TYPE_CHECKING, Any, Callable, ContextManager, Iterator, Sequence, TypeVar, cast
-"phi3"
 import numpy as np
 import torch
 
@@ -26,7 +25,7 @@ import gguf
 
 from convert import LlamaHfVocab, permute
 
-###### phi3 ######
+###### phi3 llama######
 ###### MODEL DEFINITIONS ######
 
 class SentencePieceTokenTypes(IntEnum):
@@ -175,6 +174,8 @@ class Model(ABC):
 
     def write(self):
         self.gguf_writer.add_add_architecture("llama")
+        self.gguf_writer.add_file_type(15)
+        self.gguf_writer.add_rope_freq_base(10000.000000)
         self.write_tensors()
         self.gguf_writer.write_header_to_file()
         self.gguf_writer.write_kv_data_to_file()
@@ -2145,15 +2146,14 @@ class Phi3MiniModel(Model):
 
     def set_gguf_parameters(self):
         block_count = self.find_hparam(["num_hidden_layers", "n_layer"])
-
+        
         rot_pct = 1.0
         n_embd = self.find_hparam(["hidden_size", "n_embd"])
         n_head = self.find_hparam(["num_attention_heads", "n_head"])
         rms_eps = self.find_hparam(["rms_norm_eps"])
-
-        self.gguf_writer.add_name("llama")
+        self.gguf_writer.add_name("LLaMA v2")
         self.gguf_writer.add_context_length(self.find_hparam(["n_positions", "max_position_embeddings"]))
-
+        self.gguf_writer.add_vocab_size(32064)
         self.gguf_writer.add_embedding_length(n_embd)
         self.gguf_writer.add_feed_forward_length(8192)
         self.gguf_writer.add_block_count(block_count)
