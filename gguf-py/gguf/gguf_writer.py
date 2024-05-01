@@ -296,8 +296,11 @@ class GGUFWriter:
     def close(self) -> None:
         self.fout.close()
 
-    def add_architecture(self) -> None:
-        self.add_string(Keys.General.ARCHITECTURE, self.arch)
+    def add_architecture(self,arch_string=None) -> None:
+        if not arch_string:
+            self.add_string(Keys.General.ARCHITECTURE, self.arch)
+        else:
+            self.add_string(Keys.General.ARCHITECTURE, arch_string)
 
     def add_author(self, author: str) -> None:
         self.add_string(Keys.General.AUTHOR, author)
