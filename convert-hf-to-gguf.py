@@ -173,7 +173,7 @@ class Model(ABC):
             self.gguf_writer.add_tensor(new_name, data)
 
     def write(self):
-        self.gguf_writer.add_add_architecture("llama")
+        self.gguf_writer.add_architecture("llama")
         self.gguf_writer.add_file_type(15)
         self.gguf_writer.add_rope_freq_base(10000.000000)
         self.write_tensors()
